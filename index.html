@@ -8,27 +8,34 @@
 </head>
 <body>
 
-  <header class="portada">
-    <div class="portada-texto">
-      <h1>Auto de los Reyes Magos</h1>
-      <p>Temporada 2025/2026</p>
-    </div>
-	<img src="foto1.png"/>
-  </header>
+<header class="portada">
+  <div class="portada-texto">
+    <h1>Auto de los Reyes Magos</h1>
+    <p>Temporada 2025/2026</p>
+  </div>
+  <figure>
+    <img src="YDRAY-R0000931.jpg"/>
+    <figcaption>Salón de actos Escuela Libre Micael, Las Rozas, 2022</figcaption>    </figure>
+</header>
 
+<div class="degradado-portada"></div>
+  
 <section class="presentacion">
   <h2>Presentación</h2>
   <div class="presentacion-caja">
     <div class="presentacion-imagen">
-      <img src="foto2.png"/>
+      <figure>
+        <img src="foto2.png"/>
+        <figcaption>Iglesia en La Bañeza, 2010</figcaption>
+      </figure>
     </div>    
     <div class="presentacion-texto">
       <h3>Acerca de la Obra</h3>
       <p>
-        Este Auto Sacramental cuya representación queremos ofrecer, forma parte de la Trilogía de los Autos de Navidad de Oberufer. Tienen origen medieval, sus comienzos datan en el siglo XII en donde era costumbre escenificar teatros religiosos y ritos sagrados en iglesias y monasterios trasladándose más tarde a plazas y espacios exteriores. Así, la representación del Misterio de la Navidad se convirtió en una tradición, tanto en Europa como en España.
+        Este Auto Sacramental cuya representación queremos ofrecer, forma parte de la Trilogía de los <strong>Autos de Navidad de Oberufer</strong>. Tienen origen medieval, sus comienzos datan en el siglo XII en donde era costumbre escenificar teatros religiosos y ritos sagrados en iglesias y monasterios trasladándose más tarde a plazas y espacios exteriores. Así, la representación del Misterio de la Navidad se convirtió en una tradición, tanto en Europa como en España.
       </p>
 	  <p>
-	  El Auto de los Tres Reyes Magos que propone la Compañía está integrado por representación teatral, canto coral y música de piano y relata el Nacimiento del Niño Dios, la adoración de los Tres Reyes y la matanza de los Santos Inocentes, tal y como es narrado en el Evangelio de San Mateo.
+	  El <strong>Auto de los Tres Reyes Magos</strong> que propone la Compañía está integrado por representación teatral, canto coral y música de piano y relata el <strong>Nacimiento del Niño Dios, la adoración de los Tres Reyes y la matanza de los Santos Inocentes</strong>, tal y como es narrado en el Evangelio de San Mateo.
 	  </p>
 	  <p>
 	  Está integrado por dieciséis actores y una pianista y aparecen figuras como la Sagrada Familia, el Ángel, los Reyes Magos, el Sabio Sacerdote, el Paje, Herodes, los tres Escribas, el Lacayo, el Soldado, el peón Guerrero y el Diablo.
@@ -51,9 +58,15 @@
   </div>
 
   <!-- Imágenes superpuestas -->
-  <div class="imagenes-superpuestas">
-    <img src="foto3.png" class="imagen1"/>
-    <img src="foto4.png" class="imagen2"/>
+  <div class="fotos-elencos">
+    <figure  class="imagen1">
+      <img src="foto3.png"/>
+      <figcaption>Salón de actos Escuela Libre Micael, Las Rozas, 2024</figcaption>
+    </figure>
+    <figure class="imagen2">
+      <img src="foto4.png"/>
+      <figcaption>Iglesia de Mazuela, Burgos, 2024</figcaption>
+    </figure>
   </div>
 
 
@@ -88,9 +101,8 @@
   <h2>Presupuesto</h2>
   <div class="presupuesto-caja">
     <p>
-      El presupuesto necesario está destinado tan solo a cubrir gastos básicos. Esta dotación económica, sería de unos mil cuatro cientos euros.
+      El presupuesto necesario está destinado tan solo a cubrir gastos básicos. Esta dotación económica, sería de unos mil cuatro cientos euros (1.400 €).
     </p>
-    <p class="importe-final"><strong>1.400 €</strong></p>
   </div>
 </section>
 
@@ -117,27 +129,36 @@
   <img src="adoracion.png"/>
 </section>
 
-<div id="lightbox" class="lightbox">
+<div id="lightbox" style="display:none;">
   <span class="arrow left">&#10094;</span>
-  <img id="lightbox-img" src="" alt="Imagen ampliada">
+  <img id="lightbox-img" src="" alt="">
   <span class="arrow right">&#10095;</span>
+  <p id="lightbox-caption" style="text-align:center; margin-top:10px; font-size:0.9rem; color:#fff;"></p>
 </div>
+
 
 <script>
   const images = Array.from(document.querySelectorAll('img'));
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
   let currentIndex = 0;
+
+  function updateLightbox(index) {
+    lightboxImg.src = images[index].src;
+    const figcaption = images[index].closest('figure')?.querySelector('figcaption');
+    lightboxCaption.textContent = figcaption ? figcaption.textContent : '';
+  }
 
   images.forEach((img, index) => {
     img.addEventListener('click', () => {
       currentIndex = index;
-      lightboxImg.src = img.src;
+      updateLightbox(currentIndex);
       lightbox.style.display = 'flex';
     });
   });
 
-  document.getElementById('lightbox').addEventListener('click', (e) => {
+  lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target === lightboxImg) {
       lightbox.style.display = 'none';
     }
@@ -146,16 +167,15 @@
   document.querySelector('.arrow.left').addEventListener('click', (e) => {
     e.stopPropagation();
     currentIndex = (currentIndex - 1 + images.length) % images.length;
-    lightboxImg.src = images[currentIndex].src;
+    updateLightbox(currentIndex);
   });
 
   document.querySelector('.arrow.right').addEventListener('click', (e) => {
     e.stopPropagation();
     currentIndex = (currentIndex + 1) % images.length;
-    lightboxImg.src = images[currentIndex].src;
+    updateLightbox(currentIndex);
   });
 </script>
 
 </body>
-
 </html>
